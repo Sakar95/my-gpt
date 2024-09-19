@@ -35,7 +35,7 @@ exports.generateContent = async (req, res) => {
 
     await user.save();
 
-    res.json({ botResponse });
+    res.json({ success :true,botResponse });
 
     console.log("Bot response:", botResponse);
   } catch (error) {
@@ -53,7 +53,10 @@ exports.getAllChats = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.json({ chatHistory: user.chatHistory });
+       return res.status(200).json({
+        success : true,
+        chatHistory: user.chatHistory,
+    })
   } catch (error) {
     console.error("Error fetching user chats:", error);
     res.status(500).json({ message: "Server error" });
@@ -75,7 +78,7 @@ exports.deleteAllChats = async (req, res) => {
     user.chatHistory = [];
     await user.save();
 
-    res.json({ message: "All chats deleted successfully" });
+    res.json({ success : true, message: "All chats deleted successfully" });
   } catch (error) {
     console.error("Error deleting chats:", error);
     res.status(500).json({ message: "Server error" });
