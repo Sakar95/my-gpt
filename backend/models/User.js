@@ -21,8 +21,14 @@ const userSchema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Chat"
-          }
-    ]  
+        }
+    ],
+    // imageHistory: [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: "Chat"
+    //     }
+    // ]
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

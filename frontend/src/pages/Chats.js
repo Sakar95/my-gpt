@@ -41,7 +41,7 @@ export default function ChatPage() {
     return (
         <div className="flex flex-col md:flex-row min-h-[calc(100vh-64px)] bg-gray-900 text-gray-100">
             {/* Left Section */}
-            <Sidebar />
+            <Sidebar text={"Start a conversation with Your own AI and explore the power of artificial intelligence."} />
 
             {/* Right Section */}
             <div className="w-full md:w-full flex flex-col">

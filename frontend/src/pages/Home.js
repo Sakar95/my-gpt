@@ -3,11 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { MessageSquare } from "lucide-react";
 import { useSelector } from "react-redux";
-import Robot from "../Assets/Robot_img.webp"
+import RobotImg from "../Assets/Robot_img.webp"
+import RobotChat from "../Assets/Robot_Chat.png"
+import HomePageBox from "../components/HomePageBox";
+
 
 // Add the phrases for the typing effect
 const phrases = [
-    "Your own GPT!",
+    "Your Own GPT!",
     "Build with Gemini!"
 ];
 
@@ -43,10 +46,12 @@ export default function Home() {
     }, [currentText, isDeleting, typingSpeed, currentPhraseIndex]);
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-lg w-full space-y-8">
+        <div className=" flex flex-col items-center justify-center min-h-[calc(100vh-65px)] bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 ">
+            <div className="max-w-4xl w-full space-y-8">
                 <div>
-                    <h1 className="mt-6 text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 h-20">
+                    <h1 className="mt-2 text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 h-20"
+                        style={{ fontFamily: "Ubuntu", fontWeight: "500" }}
+                    >
                         <AnimatePresence mode="wait">
                             <motion.span
                                 key={currentPhraseIndex}
@@ -60,22 +65,26 @@ export default function Home() {
                             </motion.span>
                         </AnimatePresence>
                     </h1>
-                    <p className="mt-2 text-center text-xl text-gray-400">
-                        Experience the power of AI conversation
+                    <p className="mt-2 text-center text-xl text-gray-400"
+                        
+                    >
+                        Experience the power of AI with Synapse
                     </p>
                 </div>
 
                 <div className="relative h-12 overflow-hidden">
                     <motion.div
-                        className="absolute whitespace-nowrap text-purple-400 text-lg"
+                        className="absolute whitespace-nowrap text-purple-400 text-lg text-center"
                         animate={{
-                            x: ["-100%", "0%", "0%", "-100%"],
+                            x: ["-100%", "80%"],
                         }}
                         transition={{
-                            duration: 20,
+                            duration: 10,
                             ease: "linear",
                             repeat: Infinity,
                         }}
+
+                        style={{ fontFamily: "Poppins" }}
                     >
                         Discover • Learn • Engage • Explore • Create • Innovate • Collaborate
                     </motion.div>
@@ -83,64 +92,50 @@ export default function Home() {
 
                 {/* Conditional rendering based on token */}
                 {token ? (
-                    <div className="mt-8 flex items-center justify-center bg-gray-800 bg-opacity-50 p-4 rounded-lg shadow-lg shadow-purple-500/50 border border-purple-500 cursor-pointer h-auto lg:h-56"
-                    onClick={()=>navigate('/chat')}
-                    >
-                        <motion.img
-                            src={Robot} 
-                            alt="Robot"
-                            className=" w-40 h-auto lg:h-40"
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 1, delay: 0.5  }}
-                        />
-                        
-
-                        <motion.div
-                            className="ml-2"
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 1, delay: 0.5 }}
-                        >
-                            <h2 className="text-4xl  text-purple-300 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Ask me!!</h2>
-                        </motion.div>
+                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    
+                    <HomePageBox text={"Decode  Snap"} path={"image"} img={RobotImg} subtext={"Analyze Your Image"}/>
+                    
+                    <HomePageBox text={"Chat with me !!"} path={"chat"} img={RobotChat} subtext={"Ask you your Doubts"}/>
                     </div>
                 ) : (
                     // Show login prompt if not logged in
                     <>
-                    
-                    
-                    <div className="mt-8 bg-gray-800 bg-opacity-50 p-6 rounded-lg shadow-lg shadow-purple-500/50 border border-purple-500">
-                        <h2 className="text-2xl font-bold text-purple-300 mb-4 text-center">
-                            Start Chatting
-                        </h2>
-                        <p className="text-gray-300 mb-6 text-center">
-                            Log in to access the full power of Gemini AI and start an engaging conversation.
-                        </p>
-                        <Link
-                            to="/login"
-                            className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out shadow-lg"
-                        >
-                            <MessageSquare className="mr-2 h-5 w-5" />
-                            Login to Chat
-                        </Link>
-                    </div>
 
-                    <div className="mt-8 text-center">
-                    <p className="text-sm text-gray-400">
-                        Don't have an account?{" "}
-                        <Link
-                            to="/signup"
-                            className="font-medium text-purple-400 hover:text-purple-300"
+
+                        <div className="mt-8 bg-gray-800 bg-opacity-50 p-6 rounded-lg shadow-lg shadow-purple-500/50 border border-purple-500"
+                            style={{ fontFamily: "Poppins" }}
                         >
-                            Sign up here
-                        </Link>
-                    </p>
-                </div>
+                            <h2 className="text-2xl font-semibold text-purple-300 mb-4 text-center">
+                                Start Exploring
+                            </h2>
+                            <p className="text-gray-300 mb-6 text-center">
+                                Analyze Images, Ask Questions. 
+                            </p>
+                            <Link
+                                to="/login"
+                                className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out shadow-lg"
+                            >
+                                {/* <MessageSquare className="mr-2 h-5 w-5" /> */}
+                                Login to begin.
+                            </Link>
+                        </div>
+
+                        <div className="mt-8 text-center">
+                            <p className="text-sm text-gray-400">
+                                Don't have an account?{" "}
+                                <Link
+                                    to="/signup"
+                                    className="font-medium text-purple-400 hover:text-purple-300"
+                                >
+                                    Sign up here
+                                </Link>
+                            </p>
+                        </div>
                     </>
                 )}
 
-                
+
             </div>
         </div>
     );

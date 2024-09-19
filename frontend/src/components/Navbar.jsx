@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Menu, X, LogIn, UserPlus, MessageCircle, Image, LogOut } from "lucide-react"
+import { Menu, X, LogIn, UserPlus, MessageCircle, Image, LogOut,Home } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { logout } from "../operations/authApi"
@@ -19,7 +19,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-900 shadow-lg sticky">
+    <nav className="bg-gray-900 shadow-lg ">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -28,9 +28,10 @@ export default function Navbar() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <div className="ml-4 text-xl font-bold text-purple-300 cursor-pointer"
+            <div className="ml-4 text-2xl  text-purple-400 cursor-pointer"
+            style={{fontFamily:"Ubuntu", fontWeight: "500"}}
                 onClick={()=>navigate("/")}
-            >My-GPT</div>
+            >Synapse.ai</div>
           </div>
 
           {/* Desktop menu */}
@@ -38,14 +39,19 @@ export default function Navbar() {
             <div className="ml-4 flex items-center space-x-4">
               {token ? (
                 <>
+                <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out flex items-center">
+                    <Home className="mr-2 h-4 w-4" />
+                    Home
+                  </Link>
                   <Link to="/chat" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out flex items-center">
                     <MessageCircle className="mr-2 h-4 w-4" />
                     Chat
                   </Link>
-                  <Link to="/generate-image" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out flex items-center">
+                  <Link to="/image" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out flex items-center">
                     <Image className="mr-2 h-4 w-4" />
-                    Generate Image
+                    Analyze image
                   </Link>
+                  
                   <button
                     onClick={handleLogout}
                     className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out flex items-center"
@@ -88,15 +94,16 @@ export default function Navbar() {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 ">
             {token ? (
               <>
                 <Link to="/chat" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">
                   Chat
                 </Link>
-                <Link to="/generate-image" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">
-                  Generate Image
+                <Link to="/image" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">
+                  Analyze Image
                 </Link>
+                
                 <button
                   onClick={handleLogout}
                   className="bg-red-600 hover:bg-red-700 text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out w-full text-left"

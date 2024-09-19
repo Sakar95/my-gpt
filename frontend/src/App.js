@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import VerifyOtp from './pages/VerifyOtp';
 import Home from './pages/Home';
 import ChatPage from './pages/Chats';
+import ImageUploadPage from './pages/Image';
 
 function App() {
   
@@ -16,6 +17,7 @@ const {token} = useSelector(state=>state.auth)
     <div className="App">
       <BrowserRouter>
         <Navbar/>
+        <hr className="border-purple-300 w-full " />
         <Routes>
         {/* <Route path="/signup" element={token ? <Navigate to="/" /> : <Signup />} /> */}
         <Route path="/" element={<Home/>}/>
@@ -23,6 +25,7 @@ const {token} = useSelector(state=>state.auth)
          <Route path= "/login" element={<Login/>}/>
          <Route path= "/verify-email" element={<VerifyOtp/>}/>
          <Route path= "/chat" element={<ChatPage/>}/>
+         <Route path= "/image" element={<ImageUploadPage/>}/>
 
         </Routes>
       </BrowserRouter>
