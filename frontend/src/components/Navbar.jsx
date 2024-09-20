@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
-import { Menu, X, LogIn, UserPlus, MessageCircle, Image, LogOut, Home } from "lucide-react"
+import { Menu, X, LogIn, UserPlus, MessageCircle, Image, LogOut, Home, Trash } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { logout } from "../operations/authApi"
 import { jwtDecode } from "jwt-decode"
+import { deleteAllChats } from "../operations/chatApi";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -12,6 +13,15 @@ export default function Navbar() {
   // Get token and user profile info from Redux store
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate()
+
+  const { user } = useSelector((state) => state.profile);
+
+
+  const clearConversation = () => {
+    if (user?._id) {
+        dispatch(deleteAllChats(user._id));
+    }
+};
 
   // Handle logout
   
@@ -40,7 +50,7 @@ export default function Navbar() {
   }, [token, dispatch, navigate]);
 
   return (
-    <nav className="bg-gray-900 shadow-lg ">
+    <nav className="bg-gray-900 shadow-lg sticky top-0 z-40">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -119,17 +129,28 @@ export default function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 ">
             {token ? (
               <>
-                <Link to="/chat" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">
+                <Link to="/chat" className="text-gray-300 hover:bg-gray-700 hover:text-white  px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out flex items-center">
+                <MessageCircle className="mr-2 h-4 w-4" />
                   Chat
                 </Link>
-                <Link to="/image" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">
+                <Link to="/image" className="text-gray-300 hover:bg-gray-700 hover:text-white flex items-center px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">
+                <Image className="mr-2 h-4 w-4" />
                   Analyze Image
                 </Link>
 
                 <button
-                  onClick={ handleLogout}
-                  className="bg-red-600 hover:bg-red-700 text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out w-full text-left"
+                  onClick={ clearConversation}
+                  className=" text-white flex items-center px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out w-full text-left"
                 >
+                  <Trash className="mr-2 h-4 w-4" />
+                  Delete Chats
+                </button>
+
+                <button
+                  onClick={ handleLogout}
+                  className="bg-red-600 hover:bg-red-700 text-white flex items-center px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out w-full text-left"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
                   Logout
                 </button>
                 

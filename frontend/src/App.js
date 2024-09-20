@@ -17,7 +17,7 @@ const {token} = useSelector(state=>state.auth)
     <div className="App">
       <BrowserRouter>
         <Navbar/>
-        <hr className="border-purple-300 w-full " />
+        <hr className="border-purple-300 w-full z-50 fixed top-[65px]" />
         <Routes>
         <Route path="/signup" element={token ? <Navigate to="/" /> : <Signup />} />
         <Route path="/" element={<Home/>}/>

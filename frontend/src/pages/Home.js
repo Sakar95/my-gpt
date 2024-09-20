@@ -8,7 +8,6 @@ import RobotImg from "../Assets/Robot_Chat.png"
 import HomePageBox from "../components/HomePageBox";
 
 
-// Add the phrases for the typing effect
 const phrases = [
     "Your Own GPT!",
     "Build with Gemini!"
@@ -23,7 +22,7 @@ export default function Home() {
     const [isDeleting, setIsDeleting] = useState(false);
     const [typingSpeed, setTypingSpeed] = useState(100);
 
-    // Typing effect logic
+    
     useEffect(() => {
         const fullText = phrases[currentPhraseIndex];
 
@@ -90,7 +89,6 @@ export default function Home() {
                     </motion.div>
                 </div>
 
-                {/* Conditional rendering based on token */}
                 {token ? (
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     
@@ -99,7 +97,6 @@ export default function Home() {
                     <HomePageBox text={"Chat with me !!"} path={"chat"} img={RobotChat} subtext={"Ask you your Doubts"}/>
                     </div>
                 ) : (
-                    // Show login prompt if not logged in
                     <>
 
 
@@ -116,7 +113,7 @@ export default function Home() {
                                 to="/login"
                                 className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out shadow-lg"
                             >
-                                {/* <MessageSquare className="mr-2 h-5 w-5" /> */}
+                                
                                 Login to begin.
                             </Link>
                         </div>

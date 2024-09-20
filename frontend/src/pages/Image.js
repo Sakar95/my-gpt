@@ -8,8 +8,8 @@ export default function ImageUploadPage() {
     const { fileUri, generatedContent, loading } = useSelector((state) => state.image);
     const dispatch = useDispatch();
 
-    const [selectedFile, setSelectedFile] = useState(null); // State to handle selected image
-    const [isUploading, setIsUploading] = useState(false); // Track upload state
+    const [selectedFile, setSelectedFile] = useState(null); 
+    const [isUploading, setIsUploading] = useState(false); 
 
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -32,7 +32,6 @@ export default function ImageUploadPage() {
     // console.log(fileUri);
     return (
         <div className="flex flex-col md:flex-row min-h-[calc(100vh-64px)] bg-gray-800 text-gray-100">
-            {/* <Sidebar text={"Upload your image for an in-depth analysis and insights"}/> */}
             <div className=" flex flex-col  w-full max-w-lg mx-auto pt-16">
                 <h1 className="text-2xl font-semibold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Upload an Image and Discover Its Secrets!</h1>
 
@@ -81,7 +80,6 @@ export default function ImageUploadPage() {
                     </div>
                 )}
 
-                {/* Loading Indicator */}
                 {isUploading && (
                     <div className="text-center mt-4">
                         <p className="text-gray-400">Processing your image, please wait...</p>
