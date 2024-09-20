@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: "https://synapse-ai.onrender.com/",
+		origin: "https://synapse-ai.onrender.com",
 		credentials: true,
 	})
 )
