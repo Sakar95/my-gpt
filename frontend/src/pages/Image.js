@@ -29,18 +29,18 @@ export default function ImageUploadPage() {
             setIsUploading(false);
         }
     }, [loading]);
-    console.log(fileUri);
+    // console.log(fileUri);
     return (
-        <div className="flex flex-col md:flex-row min-h-[calc(100vh-64px)] bg-gray-900 text-gray-100">
+        <div className="flex flex-col md:flex-row min-h-[calc(100vh-64px)] bg-gray-800 text-gray-100">
             {/* <Sidebar text={"Upload your image for an in-depth analysis and insights"}/> */}
             <div className=" flex flex-col  w-full max-w-lg mx-auto pt-16">
                 <h1 className="text-2xl font-semibold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">Upload an Image and Discover Its Secrets!</h1>
 
                 {/* File Input Section */}
-                <form onSubmit={handleUpload} className="p-4 bg-gray-800 rounded-md shadow-md m-4">
-                    <div className="flex items-center justify-between mb-4">
+                <form onSubmit={handleUpload} className="p-4 bg-gray-700 rounded-md shadow-md shadow-purple-500/50 m-4">
+                    <div className="flex items-center justify-between mb-4 text-[12px] sm:text-[16px]">
                         <label htmlFor="file-upload" className="cursor-pointer bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600 transition">
-                            <ImageIcon className="h-6 w-6 inline-block mr-2" />
+                            <ImageIcon className="h-6 w-6 inline-block mr-2 " />
                             Select Image
                             <input
                                 id="file-upload"
@@ -70,7 +70,7 @@ export default function ImageUploadPage() {
                 {fileUri && (
                     
                     <div className="mt-6 p-4 bg-gray-800 rounded-md shadow-md">
-                        <h2 className="text-xl font-semibold mb-4 text-center">Uploaded Image</h2>
+                        {/* <h2 className="text-xl font-semibold mb-4 text-center">Uploaded Image</h2> */}
                         <img src={fileUri} alt="Uploaded" className="w-[200px] h-auto mb-4 mx-auto" />
                              
                         

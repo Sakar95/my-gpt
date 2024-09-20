@@ -6,7 +6,6 @@ const chatRoutes = require("./routes/chat-routes")
 const imageRoutes = require("./routes/image-routes")
 
 const database = require("./config/database");
-const cloudinary = require("./config/cloudinary")
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -18,7 +17,7 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 database.connect();
 
-// cloudinary.connectCloudinary();
+
 
 
 //middlewares

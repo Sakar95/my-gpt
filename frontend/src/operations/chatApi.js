@@ -16,11 +16,10 @@ export function generateContent(inputMessage,userId) {
           { userMessage: inputMessage, userId },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log(response)
+        // console.log(response)
         const { success, botResponse } = response.data;
         if (success) {
           dispatch(addMessage({ userMessage:inputMessage, botResponse }));
-          toast.success("AI response received!");
         } else {
           throw new Error("Failed to generate content.");
         }

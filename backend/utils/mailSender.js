@@ -11,12 +11,12 @@ exports.mailSender = async(email, title, body) =>{
         })
 
         let info = transporter.sendMail({
-            from : "my-gpt test",
+            from : "synapse.ai",
             to : `${email}`,
             subject : `${title}`,
             html : `${body}`,
         })
-        console.log(info);
+        // console.log(info);
         return info; 
     }
     catch(error){

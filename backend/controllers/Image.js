@@ -28,7 +28,7 @@ exports.uploadAndGenerateContent = async (req, res) => {
         });
 
 
-        console.log("Upload result on goofle",uploadResultGoogle)
+        // console.log("Upload result on goofle",uploadResultGoogle)
         // Interact with Google Generative AI for content generation
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -64,45 +64,5 @@ exports.uploadAndGenerateContent = async (req, res) => {
 
 
 
-// Upload File and Generate Content
-// exports.uploadAndGenerateContent = async (req, res) => {
-//     try {
-//         const fileManager = new GoogleAIFileManager(process.env.GEMINI_API_KEY);
 
-//         // Upload the file to Google AI
-//         const uploadResult = await fileManager.uploadFile(req.file.path, {
-//             mimeType: req.file.mimetype,
-//             displayName: req.file.originalname,
-//         });
-
-       
-
-//         // Interact with Google Generative AI for content generation
-//         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-//         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-//         const result = await model.generateContent([
-//             "Tell me about this image.",
-//             {
-//                 fileData: {
-//                     fileUri: uploadResult.file.uri,
-//                     mimeType: uploadResult.file.mimeType,
-//                 },
-//             },
-//         ]);
-
-//         // Send response with the generated content
-//         res.status(200).json({
-//             success: true,
-//             message: "File uploaded and content generated successfully.",
-//             fileUri: uploadResult.file.uri,
-//             generatedContent: result.response.text(),
-//         });
-//     } catch (error) {
-//         console.error("Error uploading file or generating content:", error);
-//         res.status(500).json({
-//             success: false,
-//             message: "Error processing your request.",
-//         });
-//     }
-// };
 

@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { MessageSquare } from "lucide-react";
 import { useSelector } from "react-redux";
-import RobotImg from "../Assets/Robot_img.webp"
-import RobotChat from "../Assets/Robot_Chat.png"
+import RobotChat from "../Assets/Robot_img.webp"
+import RobotImg from "../Assets/Robot_Chat.png"
 import HomePageBox from "../components/HomePageBox";
 
 
@@ -46,7 +46,7 @@ export default function Home() {
     }, [currentText, isDeleting, typingSpeed, currentPhraseIndex]);
 
     return (
-        <div className=" flex flex-col items-center justify-center min-h-[calc(100vh-65px)] bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 ">
+        <div className=" flex flex-col items-center justify-center min-h-[calc(100vh-65px)] bg-gray-800 py-12 px-4 sm:px-6 lg:px-8 ">
             <div className="max-w-4xl w-full space-y-8">
                 <div>
                     <h1 className="mt-2 text-center text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 h-20"
@@ -72,9 +72,9 @@ export default function Home() {
                     </p>
                 </div>
 
-                <div className="relative h-12 overflow-hidden">
+                <div className="relative h-12 overflow-hidden z-10">
                     <motion.div
-                        className="absolute whitespace-nowrap text-purple-400 text-lg text-center"
+                        className="absolute whitespace-nowrap text-purple-400 text-lg text-center z-10 "
                         animate={{
                             x: ["-100%", "80%"],
                         }}
@@ -103,10 +103,10 @@ export default function Home() {
                     <>
 
 
-                        <div className="mt-8 bg-gray-800 bg-opacity-50 p-6 rounded-lg shadow-lg shadow-purple-500/50 border border-purple-500"
+                        <div className="mt-8 bg-gray-800 bg-opacity-50 p-6 rounded-lg shadow-lg shadow-purple-500/50 border border-purple-500 max-w-xl mx-auto"
                             style={{ fontFamily: "Poppins" }}
                         >
-                            <h2 className="text-2xl font-semibold text-purple-300 mb-4 text-center">
+                            <h2 className="text-2xl  font-semibold text-purple-300 mb-4 text-center">
                                 Start Exploring
                             </h2>
                             <p className="text-gray-300 mb-6 text-center">

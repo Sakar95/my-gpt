@@ -1,6 +1,6 @@
-import { useState } from "react"
-import { UserPlus, Mail, User, Lock } from "lucide-react"
-import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { UserPlus, Mail, User, Lock } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { setSignupData } from "../slices/authSlice";
@@ -14,34 +14,34 @@ export default function Signup() {
         email: "",
         username: "",
         password: "",
-    })
+    });
+    const [loading, setLoading] = useState(false); // Add loading state
 
     const handleChange = (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
-        }))
-    }
+        }));
+    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         if (formData.password.length < 8) {
             toast.error("Password must be at least 8 characters long");
-            // setLoading(false);
             return;
         }
 
+        setLoading(true); 
+
         try {
             dispatch(setSignupData(formData));
-            dispatch(sendOtp(formData.email, navigate));
+            await dispatch(sendOtp(formData.email, navigate));
         } catch (error) {
-            // console.log("Error during signup:", error);
+            toast.error("Error sending OTP. Please try again.");
         } finally {
-            // setLoading(false); // Stop loading after the operation
+            setLoading(false); 
         }
-
-        console.log("Form submitted:", formData)
 
         setFormData({
             name: "",
@@ -49,7 +49,7 @@ export default function Signup() {
             username: "",
             password: "",
         });
-    }
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-800 py-12 px-4 sm:px-6 lg:px-8">
@@ -61,7 +61,7 @@ export default function Signup() {
                 </div>
                 <hr className="border-purple-300 w-full " />
 
-                <form className="mt-8 space-y-6 w-3/4  flex flex-col justify-center items-center" onSubmit={handleSubmit}>
+                <form className="mt-8 space-y-6 w-3/4 flex flex-col justify-center items-center" onSubmit={handleSubmit}>
                     <div className="rounded-md w-full shadow-sm -space-y-px">
                         <div>
                             <label htmlFor="name" className="sr-only">
@@ -76,7 +76,7 @@ export default function Signup() {
                                     name="name"
                                     type="text"
                                     required
-                                    className="appearance-none  relative block w-full px-3 py-2 pl-10 border-b border-gray-700 rounded placeholder-gray-500 text-purple-300 rounded-t-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm bg-gray-800 bg-opacity-50 "
+                                    className="appearance-none relative block w-full px-3 py-2 pl-10 border-b border-gray-700 rounded placeholder-gray-500 text-purple-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm bg-gray-800 bg-opacity-50 "
                                     placeholder="Name"
                                     value={formData.name}
                                     onChange={handleChange}
@@ -97,7 +97,7 @@ export default function Signup() {
                                     type="email"
                                     autoComplete="email"
                                     required
-                                    className="appearance-none  relative block w-full px-3 py-2 pl-10 border-b border-gray-700 rounded placeholder-gray-500 text-purple-300 rounded-t-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm bg-gray-800 bg-opacity-50 "
+                                    className="appearance-none relative block w-full px-3 py-2 pl-10 border-b border-gray-700 rounded placeholder-gray-500 text-purple-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm bg-gray-800 bg-opacity-50 "
                                     placeholder="Email address"
                                     value={formData.email}
                                     onChange={handleChange}
@@ -117,7 +117,7 @@ export default function Signup() {
                                     name="username"
                                     type="text"
                                     required
-                                    className="appearance-none  relative block w-full px-3 py-2 pl-10 border-b border-gray-700 rounded placeholder-gray-500 text-purple-300 rounded-t-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm bg-gray-800 bg-opacity-50 "
+                                    className="appearance-none relative block w-full px-3 py-2 pl-10 border-b border-gray-700 rounded placeholder-gray-500 text-purple-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm bg-gray-800 bg-opacity-50 "
                                     placeholder="Username"
                                     value={formData.username}
                                     onChange={handleChange}
@@ -138,7 +138,7 @@ export default function Signup() {
                                     type="password"
                                     autoComplete="new-password"
                                     required
-                                    className="appearance-none  relative block w-full px-3 py-2 pl-10 border-b border-gray-700 rounded placeholder-gray-500 text-purple-300 rounded-t-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm bg-gray-800 bg-opacity-50 "
+                                    className="appearance-none relative block w-full px-3 py-2 pl-10 border-b border-gray-700 rounded placeholder-gray-500 text-purple-300 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm bg-gray-800 bg-opacity-50 "
                                     placeholder="Password"
                                     value={formData.password}
                                     onChange={handleChange}
@@ -150,12 +150,20 @@ export default function Signup() {
                     <div>
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out  "
+                            className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
+                                loading ? "bg-purple-400" : "bg-purple-600 hover:bg-purple-700"
+                            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out`}
+                            disabled={loading} // Disable button when loading
                         >
-                            Sign up
+                            {loading ? (
+                                <span>Loading...</span> // Show loading text if loading
+                            ) : (
+                                <span>Sign up</span> // Show Sign up text if not loading
+                            )}
                         </button>
                     </div>
                 </form>
+
                 <div className="text-center">
                     <p className="text-sm text-gray-400">
                         Already have an account?{" "}
@@ -166,5 +174,5 @@ export default function Signup() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

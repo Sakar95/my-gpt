@@ -8,10 +8,10 @@ export function sendOtp(email, navigate) {
     return async (dispatch) => {
         dispatch(setLoading(true))
         try {
-            console.log("SENDOTP API RESPONSE............")
+            // console.log("SENDOTP API RESPONSE............")
             const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/sendotp`, { email })
 
-            console.log(response.data.success)
+            // console.log(response.data.success)
 
             if (!response.data.success) {
                 throw new Error(response.data.message)
@@ -20,7 +20,7 @@ export function sendOtp(email, navigate) {
             toast.success("OTP Sent Successfully")
             navigate("/verify-email")
         } catch (error) {
-            console.log("SENDOTP API ERROR............", error)
+            // console.log("SENDOTP API ERROR............", error)
             toast.error(error?.response?.data?.message)
         }
 
@@ -39,10 +39,9 @@ export function signUp(
 
     return async (dispatch) => {
         dispatch(setLoading(true))
-        console.log("Before try", { name, userName, email, password, otpString })
+        // console.log("Before try", { name, userName, email, password, otpString })
         const otp = otpString
         try {
-            // console.log("Inside try---------------",otp)
             const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/signup`, {
                 name,
                 userName,
@@ -53,11 +52,11 @@ export function signUp(
             }
             );
 
-
-            console.log("SIGNUP API RESPONSE............", response)
+            // console.log("Inside try--------------- response ",response)
 
             if (!response.data.success) {
-                // console.error("Error here ------------")
+                // console.error("Error here ------------",response.data.message)
+                toast.error(response.data.message)
                 throw new Error(response.data.message)
             }
             //   dispatch(setProgress(100));
@@ -66,7 +65,7 @@ export function signUp(
         } catch (error) {
             //   dispatch(setProgress(100));
             console.log("SIGNUP API ERROR............", error)
-            toast.error("Signup Failed")
+            // toast.error("Signup Failed")
             // navigate("/signup")
         }
         dispatch(setLoading(false))

@@ -37,7 +37,7 @@ exports.generateContent = async (req, res) => {
 
     res.json({ success :true,botResponse });
 
-    console.log("Bot response:", botResponse);
+    // console.log("Bot response:", botResponse);
   } catch (error) {
     console.error("Error generating content:", error);
     res.status(500).json({ message: "Server error" });

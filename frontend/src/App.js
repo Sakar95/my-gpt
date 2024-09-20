@@ -8,10 +8,10 @@ import VerifyOtp from './pages/VerifyOtp';
 import Home from './pages/Home';
 import ChatPage from './pages/Chats';
 import ImageUploadPage from './pages/Image';
+import Footer from './components/Footer';
 
 function App() {
   
-const { user } = useSelector(state => state.profile);
 const {token} = useSelector(state=>state.auth)
   return (
     <div className="App">
@@ -19,15 +19,15 @@ const {token} = useSelector(state=>state.auth)
         <Navbar/>
         <hr className="border-purple-300 w-full " />
         <Routes>
-        {/* <Route path="/signup" element={token ? <Navigate to="/" /> : <Signup />} /> */}
+        <Route path="/signup" element={token ? <Navigate to="/" /> : <Signup />} />
         <Route path="/" element={<Home/>}/>
-         <Route path="/signup" element={<Signup />} />
-         <Route path= "/login" element={<Login/>}/>
+        <Route path="/login" element={token ? <Navigate to="/" /> : <Login />} />
          <Route path= "/verify-email" element={<VerifyOtp/>}/>
          <Route path= "/chat" element={<ChatPage/>}/>
          <Route path= "/image" element={<ImageUploadPage/>}/>
 
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </div>
   );

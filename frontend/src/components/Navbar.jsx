@@ -1,8 +1,9 @@
-import { useState } from "react"
-import { Menu, X, LogIn, UserPlus, MessageCircle, Image, LogOut,Home } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Menu, X, LogIn, UserPlus, MessageCircle, Image, LogOut, Home } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { logout } from "../operations/authApi"
+import { jwtDecode } from "jwt-decode"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -10,13 +11,33 @@ export default function Navbar() {
 
   // Get token and user profile info from Redux store
   const { token } = useSelector((state) => state.auth);
-  const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate()
 
   // Handle logout
+  
+  
   const handleLogout = () => {
     dispatch(logout(navigate)); // Dispatch logout action
   };
+
+  useEffect(() => {
+    if (!token) return;
+
+    const decodedToken = jwtDecode(token);
+    const expirationTime = decodedToken.exp * 1000;
+
+    if (Date.now() >= expirationTime) {
+      dispatch(logout(navigate));
+      return;
+    }
+
+    const remainingTime = expirationTime - Date.now();
+    const timer = setTimeout(() => {
+      dispatch(logout(navigate));
+    }, remainingTime);
+
+    return () => clearTimeout(timer);
+  }, [token, dispatch, navigate]);
 
   return (
     <nav className="bg-gray-900 shadow-lg ">
@@ -29,8 +50,8 @@ export default function Navbar() {
               </svg>
             </div>
             <div className="ml-4 text-2xl  text-purple-400 cursor-pointer"
-            style={{fontFamily:"Ubuntu", fontWeight: "500"}}
-                onClick={()=>navigate("/")}
+              style={{ fontFamily: "Ubuntu", fontWeight: "500" }}
+              onClick={() => navigate("/")}
             >Synapse.ai</div>
           </div>
 
@@ -39,7 +60,7 @@ export default function Navbar() {
             <div className="ml-4 flex items-center space-x-4">
               {token ? (
                 <>
-                <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out flex items-center">
+                  <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out flex items-center">
                     <Home className="mr-2 h-4 w-4" />
                     Home
                   </Link>
@@ -51,7 +72,7 @@ export default function Navbar() {
                     <Image className="mr-2 h-4 w-4" />
                     Analyze image
                   </Link>
-                  
+
                   <button
                     onClick={handleLogout}
                     className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out flex items-center"
@@ -59,6 +80,7 @@ export default function Navbar() {
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout
                   </button>
+                  
                 </>
               ) : (
                 <>
@@ -103,20 +125,21 @@ export default function Navbar() {
                 <Link to="/image" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">
                   Analyze Image
                 </Link>
-                
+
                 <button
-                  onClick={handleLogout}
+                  onClick={ handleLogout}
                   className="bg-red-600 hover:bg-red-700 text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out w-full text-left"
                 >
                   Logout
                 </button>
+                
               </>
             ) : (
               <>
                 <Link to="/login" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out">
                   Login
                 </Link>
-                <Link to="/signup" className="bg-purple-600 hover:bg-purple-700 text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out shadow-lg hover:shadow-purple-500/50">
+                <Link to="/signup" className="bg-purple-600 hover:bg-purple-700 text-white block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out shadow-lg ">
                   Sign Up
                 </Link>
               </>

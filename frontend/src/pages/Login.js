@@ -25,7 +25,7 @@ export default function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("Form submitted:", formData)
+        // console.log("Form submitted:", formData)
         dispatch(login(email, password, navigate))
 
 

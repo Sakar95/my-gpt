@@ -28,14 +28,14 @@ export function uploadAndGenerateContent(file) {
                 // Update state with the uploaded file URI and the generated content
                 dispatch(setFileUri(fileUri));
                 dispatch(setGeneratedContent(generatedContent));
-                toast.success("File uploaded and content generated successfully!");
+                // toast.success("File uploaded and content generated successfully!");
             } else {
                 throw new Error("Failed to upload file or generate content.");
             }
         } catch (error) {
             console.error("Upload and Generate Content Error:", error);
             dispatch(setError(error.response?.data?.message || "Error occurred"));
-            toast.error(error.response?.data?.message || "Error occurred");
+            // toast.error(error.response?.data?.message || "Error occurred");
         }
 
         dispatch(setLoading(false));

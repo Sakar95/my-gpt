@@ -27,7 +27,7 @@ exports.sendOTP = async(req,res) =>{
             specialChars : false,
         })
 
-        console.log("OTP generated is:", otp);
+        // console.log("OTP generated is:", otp);
 
         // check unique otp or not
         let result = await OTP.findOne({otp : otp});
@@ -44,7 +44,7 @@ exports.sendOTP = async(req,res) =>{
         const otpPayload = {email,otp};
 
         const otpBody = await OTP.create(otpPayload);
-        console.log(otpBody);
+        // console.log(otpBody);
 
         return res.status(200).json({
             success : true,
@@ -64,14 +64,14 @@ exports.sendOTP = async(req,res) =>{
 //signUp
 exports.signUp = async (req, res) => {
     try {
-        const { userName, email, password,  otp } = req.body;
+        const { name,userName, email, password,  otp } = req.body;
 
         // Log the input data to see if it's correctly passed
-        console.log("User sign-up request:", { userName, email, password,  otp });
+        // console.log("User sign-up request:", {name, userName, email, password,  otp });
 
         // validation
-        if (!userName || !email || !password || !otp) {
-            console.log("Validation failed - missing fields");
+        if (!name || !userName || !email || !password || !otp) {
+            // console.log("Validation failed - missing fields");
             return res.status(403).json({
                 success: false,
                 message: "All fields are required",
@@ -93,47 +93,46 @@ exports.signUp = async (req, res) => {
         }
 
         // Check for existing user
-        const existingUser = await User.findOne({ $or: [{ email }, { userName }] });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             console.log("Existing user found:", existingUser);
             return res.status(400).json({
-                success: false,
-                message: existingUser.email === email
-                    ? "Email is already registered"
-                    : "Username is already taken",
+                
+                 message : "Email is already registered"
             });
         }
 
         // Check recent OTP for the given email
         const recentOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-        console.log("Recent OTP from DB:", recentOtp);
+        // console.log("Recent OTP from DB:", recentOtp);
 
         if (recentOtp.length === 0) {
-            console.log("No OTP found for this email");
-            return res.status(400).json({
+            // console.log("No OTP found for this email");
+            return res.json({
                 success: false,
-                message: "OTP not found",
+                message: "OTP not found Signup again",
             });
         } else if (otp != recentOtp[0].otp) {
-            console.log("Invalid OTP provided:", otp, "Expected OTP:", recentOtp[0].otp);
-            return res.status(400).json({
+            // console.log("Invalid OTP provided:", otp, "Expected OTP:", recentOtp[0].otp);
+            return res.json({
                 success: false,
-                message: "Invalid OTP (not matched)",
+                message: "Invalid OTP",
             });
         }
 
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
-        console.log("Password hashed successfully");
+        // console.log("Password hashed successfully");
 
         // Create the user
         const user = await User.create({
+            name,
             userName,
             email,
             password: hashedPassword,
             
         });
-        console.log("User created successfully:", user);
+        // console.log("User created successfully:", user);
 
         // return response successfully
         return res.status(200).json({
